@@ -1,0 +1,12 @@
+version: '2.3'
+
+services:
+  postgress:
+    image: postgres:12.8
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=test_db
+      - POSTGRES_PASSWORD=test_db
+      - POSTGRES_DB=student_tracker
+
