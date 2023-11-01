@@ -7,7 +7,7 @@ class session:
 
     def __init__(self, db_name: str = None) -> None:
         self.db_name = db_name or config.APP_NAME + '.db'
-        self.connection = sqlite3.connect(db_name)
+        self.connection = sqlite3.connect(self.db_name)
 
     def execute(self, query: Query, commit: bool = False) -> sqlite3.Cursor:
         if self.connection is None:
