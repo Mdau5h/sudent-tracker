@@ -4,9 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-sqlalchemy = "==1.4.31"
-asyncpg = "*"
-
 
 [dev-packages]
 
