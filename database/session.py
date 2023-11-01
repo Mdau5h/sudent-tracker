@@ -1,5 +1,6 @@
 import sqlite3
 from app.config import config
+from database.query import Query
 
 
 class session:
