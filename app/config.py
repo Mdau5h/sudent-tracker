@@ -6,6 +6,7 @@ load_dotenv()
 
 class Config:
     TOKEN: str = os.getenv('TOKEN')
+    APP_NAME: str = 'student-tracker'
 
 
 config = Config()
