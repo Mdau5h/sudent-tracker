@@ -26,7 +26,3 @@ def rollout():
     with session() as s:
         s.execute(Query(create_students_table))
         s.execute(Query(create_user_table))
-
-
-if __name__ == '__main__':
-    rollout()
