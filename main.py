@@ -4,7 +4,7 @@ import sys
 
 from aiogram import Bot
 from aiogram.enums import ParseMode
-from app.handlers import dp
+from app.handlers.start import dp
 from app.config import config
 
 
