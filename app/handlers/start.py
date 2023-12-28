@@ -1,6 +1,6 @@
-from aiogram import Dispatcher
 from aiogram.filters import CommandStart
 from aiogram.types import Message
+from aiogram import Dispatcher
 from app.enums import StaticMessages
 
 dp = Dispatcher()
