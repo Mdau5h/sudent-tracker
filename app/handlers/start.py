@@ -1,11 +1,16 @@
-from aiogram.filters import CommandStart
+from aiogram import Router
+from aiogram.filters import Command, CommandStart
 from aiogram.types import Message
-from aiogram import Dispatcher
 from app.enums import StaticMessages
 
-dp = Dispatcher()
+router = Router()
 
 
-@dp.message(CommandStart())
+@router.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
     await message.answer(StaticMessages.HELLO_MESSAGE)
+
+
+@router.message(Command('code'))
+async def enter_code_handler(message: Message) -> None:
+    await message.answer(StaticMessages.ENTER_CODE_MESSAGE)
