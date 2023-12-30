@@ -1,12 +1,11 @@
-version: '2.3'
+version: '3.7'
 
 services:
-  postgress:
-    image: postgres:12.8
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app/
     ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=test_db
-      - POSTGRES_PASSWORD=test_db
-      - POSTGRES_DB=student_tracker
-
+      - 8081:8081
