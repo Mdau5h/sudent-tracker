@@ -2,7 +2,7 @@ from database.session import session
 from database.query import Query
 
 create_user_table = '''
-    CREATE TABLE IF NOT EXISTS users (
+    CREATE TABLE IF NOT EXISTS user (
         id INTEGER PRIMARY KEY,
         is_admin BOOL
     );
