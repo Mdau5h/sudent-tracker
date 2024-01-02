@@ -9,7 +9,6 @@ from database.ext.users import (
 from app.enums import StaticMessages
 from app.states import UserStates
 from app.config import config
-from server import logger
 
 router = Router()
 
