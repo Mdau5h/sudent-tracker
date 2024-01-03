@@ -1,4 +1,3 @@
-import typing as t
 from database.session import session
 from database.models import User
 from database.raw.users import (
@@ -7,7 +6,7 @@ from database.raw.users import (
 )
 
 
-def get_user_by_id(user_id: int) -> t.Optional[User]:
+def get_user_by_id(user_id: int) -> None | User:
     q = get_user_by_id_query(user_id)
     with session() as s:
         r = s.execute(q).fetchone()
