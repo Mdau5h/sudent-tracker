@@ -13,9 +13,8 @@ create_students_table = '''
         id INTEGER PRIMARY KEY,
         teacher_id INTEGER,
         student_name VARCHAR,
-        paid_lessons_count INTEGER,
-        given_lesson_count INTEGER,
-        lesson_diff INTEGER,
+        paid_lessons INTEGER,
+        given_lessons INTEGER,
         is_active BOOL,
         FOREIGN KEY (teacher_id) REFERENCES users(id)
     );
