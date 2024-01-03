@@ -40,3 +40,38 @@ def create_student_query(
     )
 
     return query
+
+
+def update_student_query(
+        id: int,
+        teacher_id: int,
+        student_name: str,
+        paid_lessons: int,
+        given_lessons: int,
+        is_active: bool = True
+) -> Query:
+    bound_params = {
+        'id': id,
+        'teacher_id': teacher_id,
+        'student_name': student_name,
+        'paid_lessons': paid_lessons,
+        'given_lessons': given_lessons,
+        'lesson_diff': paid_lessons - given_lessons,
+        'is_active': is_active
+    }
+
+    query = Query(
+        '''
+        UPDATE student SET
+            teacher_id=:teacher_id,
+            student_name=:student_name,
+            paid_lessons=:paid_lessons,
+            given_lessons=:given_lessons,
+            lesson_diff=:lesson_diff,
+            is_active=:is_active
+        WHERE id=:id;
+        ''',
+        bound_params,
+    )
+
+    return query
