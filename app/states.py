@@ -10,3 +10,7 @@ class CreateStudentStates(StatesGroup):
     name = State()
     paid_lessons = State()
     given_lessons = State()
+
+
+class GetStudentStates(StatesGroup):
+    choose_student = State()
