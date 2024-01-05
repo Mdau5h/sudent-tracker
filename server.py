@@ -6,7 +6,9 @@ from aiogram import Bot
 from aiogram.enums import ParseMode
 from aiogram import Dispatcher
 from database.create import rollout as init_db
-from app.handlers import start, help
+from app.handlers.help import help_router
+from app.handlers.start import start_router
+from app.handlers.students import students_router
 from app.config import config
 
 logger = logging.getLogger(__name__)
@@ -15,7 +17,11 @@ logger = logging.getLogger(__name__)
 async def main() -> None:
     bot = Bot(config.TOKEN, parse_mode=ParseMode.HTML)
     dp = Dispatcher()
-    dp.include_routers(start.start_router, help.help_router)
+    dp.include_routers(
+        start_router,
+        help_router,
+        students_router
+    )
     init_db()
     logger.info("Database is ready")
     await dp.start_polling(bot)
