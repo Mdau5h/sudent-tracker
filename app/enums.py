@@ -1,4 +1,5 @@
 from enum import Enum
+from app.commands import for_admin
 
 
 class StaticMessages(str, Enum):
@@ -20,3 +21,7 @@ class CreateStudentForm(str, Enum):
     ENTER_PAID_MESSAGE = "Enter number of paid lessons:\n"
     ENTER_GIVEN_MESSAGE = "Enter number of given lessons:\n"
     ENTER_COMPLETE_MESSAGE = "Cool! I've saved the student's info!\n"
+
+
+class CommandsList(str, Enum):
+    FOR_ADMIN = "\n".join(for_admin())
