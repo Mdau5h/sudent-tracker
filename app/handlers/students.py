@@ -27,7 +27,7 @@ async def enter_student_name(message: Message, state: FSMContext) -> None:
 
 @students_router.message(CreateStudentStates.paid_lessons)
 @auth
-async def enter_student_name(message: Message, state: FSMContext) -> None:
+async def enter_paid_lessons(message: Message, state: FSMContext) -> None:
     # todo: add datatype check
     await state.update_data(paid_lessons=int(message.text))
     await state.set_state(CreateStudentStates.given_lessons)
@@ -36,7 +36,7 @@ async def enter_student_name(message: Message, state: FSMContext) -> None:
 
 @students_router.message(CreateStudentStates.given_lessons)
 @auth
-async def enter_paid_lessons(message: Message, state: FSMContext) -> None:
+async def enter_given_lessons(message: Message, state: FSMContext) -> None:
     # todo: add datatype check
     await state.update_data(given_lessons=int(message.text))
     data = await state.get_data()
