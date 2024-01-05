@@ -1,6 +1,14 @@
 from database.models import Student
 
 
+def format_student_list(students: list[Student]):
+    msg = '\n'.join((
+        f"/{student.id}: {student.student_name}"
+        for student in students
+    ))
+    return msg
+
+
 def format_student_info(student: Student):
     msg = (f"Name: {student.student_name}\n"
            f"Paid lessons: {student.paid_lessons}\n"
