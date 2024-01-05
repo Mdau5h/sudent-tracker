@@ -88,3 +88,26 @@ def get_student_by_id_query(id_: int) -> Query:
     )
 
     return query
+
+
+def get_students_by_tg_id_query(teacher_id: int) -> Query:
+    bound_params = {
+        'teacher_id': teacher_id
+    }
+
+    query = Query(
+        '''
+        SELECT 
+            id, 
+            teacher_id,
+            student_name,
+            paid_lessons,
+            given_lessons,
+            lesson_diff,
+            is_active
+        FROM student WHERE teacher_id=:teacher_id;
+        ''',
+        bound_params,
+    )
+
+    return query

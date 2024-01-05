@@ -3,7 +3,8 @@ from database.models import Student
 from database.raw.students import (
     create_student_query,
     update_student_query,
-    get_student_by_id_query
+    get_student_by_id_query,
+    get_students_by_tg_id_query
 )
 from database.create import rollout
 
@@ -26,3 +27,12 @@ def get_student_by_id(student_id: int) -> None | Student:
         r = s.execute(q).fetchone()
         if r:
             return Student(*r)
+
+
+def get_students_by_tg_id(teacher_id: int) -> None | list[Student]:
+    q = get_students_by_tg_id_query(teacher_id)
+    students = []
+    with session() as s:
+        for student in s.execute(q):
+            students.append(Student(*student))
+        return students
