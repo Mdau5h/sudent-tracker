@@ -6,7 +6,6 @@ from database.raw.students import (
     get_student_by_id_query,
     get_students_by_tg_id_query
 )
-from database.create import rollout
 
 
 def save_student(**kwargs) -> None:
