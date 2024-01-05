@@ -2,6 +2,7 @@ from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
+from re import match
 from app.states import (
     CreateStudentStates,
     GetStudentStates)
@@ -37,23 +38,27 @@ async def enter_student_name(message: Message, state: FSMContext) -> None:
 @students_router.message(CreateStudentStates.paid_lessons)
 @auth
 async def enter_paid_lessons(message: Message, state: FSMContext) -> None:
-    # todo: add datatype check
-    await state.update_data(paid_lessons=int(message.text))
-    await state.set_state(CreateStudentStates.given_lessons)
-    await message.answer(CreateStudentForm.ENTER_GIVEN_MESSAGE)
+    if not match("^\\d+$", message.text):
+        await message.answer(CreateStudentForm.INCORRECT_INPUT_MESSAGE)
+    else:
+        await state.update_data(paid_lessons=int(message.text))
+        await state.set_state(CreateStudentStates.given_lessons)
+        await message.answer(CreateStudentForm.ENTER_GIVEN_MESSAGE)
 
 
 @students_router.message(CreateStudentStates.given_lessons)
 @auth
 async def enter_given_lessons(message: Message, state: FSMContext) -> None:
-    # todo: add datatype check
-    await state.update_data(given_lessons=int(message.text))
-    data = await state.get_data()
-    data['teacher_id'] = message.from_user.id
-    data['lesson_diff'] = data['paid_lessons'] - data['given_lessons']
-    save_student(**data)
-    await state.clear()
-    await message.answer(CreateStudentForm.ENTER_COMPLETE_MESSAGE)
+    if not match("^\\d+$", message.text):
+        await message.answer(CreateStudentForm.INCORRECT_INPUT_MESSAGE)
+    else:
+        await state.update_data(given_lessons=int(message.text))
+        data = await state.get_data()
+        data['teacher_id'] = message.from_user.id
+        data['lesson_diff'] = data['paid_lessons'] - data['given_lessons']
+        save_student(**data)
+        await state.clear()
+        await message.answer(CreateStudentForm.ENTER_COMPLETE_MESSAGE)
 
 
 @students_router.message(Command('all'))

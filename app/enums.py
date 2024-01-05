@@ -21,6 +21,7 @@ class CreateStudentForm(str, Enum):
     ENTER_PAID_MESSAGE = "Enter number of paid lessons:\n"
     ENTER_GIVEN_MESSAGE = "Enter number of given lessons:\n"
     ENTER_COMPLETE_MESSAGE = "Cool! I've saved the student's info!\n"
+    INCORRECT_INPUT_MESSAGE = "Sorry, I didn't get you. Throw me the number, please 🙂\n"
 
 
 class CommandsList(str, Enum):
