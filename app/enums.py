@@ -24,5 +24,9 @@ class CreateStudentForm(str, Enum):
     INCORRECT_INPUT_MESSAGE = "Sorry, I didn't get you. Throw me the number, please 🙂\n"
 
 
+class GetStudentForm(str, Enum):
+    LIST_MESSAGE = "Here's the list of all your students.\nClick on their ID on the left to see more info 😉\n"
+
+
 class CommandsList(str, Enum):
     FOR_ADMIN = "\n".join(for_admin())

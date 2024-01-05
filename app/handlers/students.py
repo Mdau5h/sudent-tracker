@@ -6,7 +6,10 @@ from re import match
 from app.states import (
     CreateStudentStates,
     GetStudentStates)
-from app.enums import CreateStudentForm
+from app.enums import (
+    CreateStudentForm,
+    GetStudentForm
+)
 from database.ext.students import (
     save_student,
     get_students_by_tg_id
@@ -66,5 +69,5 @@ async def enter_given_lessons(message: Message, state: FSMContext) -> None:
 async def get_all_students_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.choose_student)
     students = get_students_by_tg_id(message.from_user.id)
-    await message.answer(format_student_list(students))
+    await message.answer(GetStudentForm.LIST_MESSAGE + format_student_list(students))
 
