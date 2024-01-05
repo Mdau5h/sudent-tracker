@@ -3,7 +3,7 @@ from database.models import Student
 
 def format_student_list(students: list[Student]):
     msg = '\n'.join((
-        f"/{student.id}: {student.student_name}"
+        f"/ID_{student.id}: {student.student_name}"
         for student in students
     ))
     return msg

@@ -1,17 +1,19 @@
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 from re import match
 from app.states import (
     CreateStudentStates,
-    GetStudentStates)
+    GetStudentStates
+)
 from app.enums import (
     CreateStudentForm,
     GetStudentForm
 )
 from database.ext.students import (
     save_student,
+    get_student_by_id,
     get_students_by_tg_id
 )
 from app.utils import (
@@ -71,3 +73,10 @@ async def get_all_students_handler(message: Message, state: FSMContext) -> None:
     students = get_students_by_tg_id(message.from_user.id)
     await message.answer(GetStudentForm.LIST_MESSAGE + format_student_list(students))
 
+
+@students_router.message(GetStudentStates.choose_student, F.text.startswith('/ID_'))
+@auth
+async def get_student_info(message: Message, state: FSMContext) -> None:
+    await state.set_state(GetStudentStates.selected)
+    student = get_student_by_id(int(message.text[4:]))
+    await message.answer(format_student_info(student))
