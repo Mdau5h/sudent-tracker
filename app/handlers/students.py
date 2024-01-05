@@ -2,9 +2,18 @@ from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
-from app.states import CreateStudentStates
+from app.states import (
+    CreateStudentStates,
+    GetStudentStates)
 from app.enums import CreateStudentForm
-from database.ext.students import save_student
+from database.ext.students import (
+    save_student,
+    get_students_by_tg_id
+)
+from app.utils import (
+    format_student_list,
+    format_student_info
+)
 from app.auth import auth
 
 students_router = Router()
@@ -45,3 +54,12 @@ async def enter_given_lessons(message: Message, state: FSMContext) -> None:
     save_student(**data)
     await state.clear()
     await message.answer(CreateStudentForm.ENTER_COMPLETE_MESSAGE)
+
+
+@students_router.message(Command('all'))
+@auth
+async def get_all_students_handler(message: Message, state: FSMContext) -> None:
+    await state.set_state(GetStudentStates.choose_student)
+    students = get_students_by_tg_id(message.from_user.id)
+    await message.answer(format_student_list(students))
+
