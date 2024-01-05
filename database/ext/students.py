@@ -26,17 +26,3 @@ def get_student_by_id(student_id: int) -> None | Student:
         r = s.execute(q).fetchone()
         if r:
             return Student(*r)
-
-
-if __name__ == '__main__':
-    rollout()
-    student_data = {
-        'teacher_id': 98989,
-        'student_name': 'pavel'
-    }
-    save_student(**student_data)
-
-    new_student_data = {
-        'lesson_diff': 999
-    }
-    update_student(id=1, **new_student_data)

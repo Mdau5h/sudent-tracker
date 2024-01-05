@@ -20,11 +20,7 @@ async def create_student_handler(message: Message, state: FSMContext) -> None:
 @students_router.message(CreateStudentStates.name)
 @auth
 async def enter_student_name(message: Message, state: FSMContext) -> None:
-    from server import logger
-
     await state.update_data(student_name=message.text)
-    data = await state.get_data()
-    logger.info(f'Stored data: {data}')
     await state.set_state(CreateStudentStates.paid_lessons)
     await message.answer(CreateStudentForm.ENTER_PAID_MESSAGE)
 
@@ -32,11 +28,8 @@ async def enter_student_name(message: Message, state: FSMContext) -> None:
 @students_router.message(CreateStudentStates.paid_lessons)
 @auth
 async def enter_student_name(message: Message, state: FSMContext) -> None:
-    from server import logger
-
+    # todo: add datatype check
     await state.update_data(paid_lessons=int(message.text))
-    data = await state.get_data()
-    logger.info(f'Stored data: {data}')
     await state.set_state(CreateStudentStates.given_lessons)
     await message.answer(CreateStudentForm.ENTER_GIVEN_MESSAGE)
 
@@ -44,11 +37,9 @@ async def enter_student_name(message: Message, state: FSMContext) -> None:
 @students_router.message(CreateStudentStates.given_lessons)
 @auth
 async def enter_paid_lessons(message: Message, state: FSMContext) -> None:
-    from server import logger
-
+    # todo: add datatype check
     await state.update_data(given_lessons=int(message.text))
     data = await state.get_data()
-    logger.info(f'Stored data: {data}')
     data['teacher_id'] = message.from_user.id
     data['lesson_diff'] = data['paid_lessons'] - data['given_lessons']
     save_student(**data)
