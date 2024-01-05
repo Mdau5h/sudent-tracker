@@ -14,5 +14,5 @@ class Student:
     student_name: str
     paid_lessons: int
     given_lessons: int
-    lesson_div: int
+    lesson_diff: int
     is_active: bool
