@@ -25,7 +25,10 @@ class CreateStudentForm(str, Enum):
 
 
 class GetStudentForm(str, Enum):
-    LIST_MESSAGE = "Here's the list of all your students.\nClick on their ID on the left to see more info 😉\n"
+    LIST_MESSAGE = ("Here's the list of all your students.\n"
+                    "Click on their ID on the left to see more info 😉\n")
+    EMPTY_LIST_MESSAGE = ("Seems like you haven't added any students.\n"
+                          "Not a big deal! Let's create one with command /create\n")
 
 
 class CommandsList(str, Enum):
