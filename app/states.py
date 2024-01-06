@@ -15,3 +15,4 @@ class CreateStudentStates(StatesGroup):
 class GetStudentStates(StatesGroup):
     choose_student = State()
     selected = State()
+    add_lessons = State()

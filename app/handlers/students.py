@@ -104,3 +104,31 @@ async def spend_student_lesson(message: Message, state: FSMContext) -> None:
     student = get_student_by_id(student_id)
     await message.answer(GetStudentForm.STUDENT_UPDATED_MESSAGE +
                          "\n" + format_student_info(student))
+
+
+@students_router.message(Command('add'), GetStudentStates.selected)
+@auth
+async def add_student_lesson(message: Message, state: FSMContext) -> None:
+    await state.set_state(GetStudentStates.add_lessons)
+    await message.answer(CreateStudentForm.ENTER_PAID_MESSAGE)
+
+
+@students_router.message(GetStudentStates.add_lessons)
+@auth
+async def add_student_lesson(message: Message, state: FSMContext) -> None:
+    if not match("^\\d+$", message.text):
+        await message.answer(CreateStudentForm.INCORRECT_INPUT_MESSAGE)
+    else:
+        data = await state.get_data()
+        student_id = data['student_id']
+        student = get_student_by_id(student_id)
+        new_data = {
+            'id': student.id,
+            'paid_lessons': student.paid_lessons + int(message.text),
+            'lesson_diff': student.lesson_diff + int(message.text),
+        }
+        update_student(**new_data)
+        student = get_student_by_id(student_id)
+        await message.answer(GetStudentForm.STUDENT_UPDATED_MESSAGE +
+                             "\n" + format_student_info(student))
+        await state.set_state(GetStudentStates.selected)

@@ -16,5 +16,7 @@ def format_student_info(student: Student):
            f"Lessons left: {student.lesson_diff}\n"
            f"Status: {'Active' if student.is_active else 'Inactive'}\n"
            f"\n"
-           f"Spend the lesson: /spend \n")
+           f"Spend the lesson: /spend \n"
+           f"Add paid lessons: /add \n"
+           )
     return msg
