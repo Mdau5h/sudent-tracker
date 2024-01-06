@@ -14,7 +14,8 @@ from app.enums import (
 from database.ext.students import (
     save_student,
     get_student_by_id,
-    get_students_by_tg_id
+    get_students_by_tg_id,
+    update_student
 )
 from app.utils import (
     format_student_list,
@@ -74,12 +75,32 @@ async def get_all_students_handler(message: Message, state: FSMContext) -> None:
     if not students:
         await message.answer(GetStudentForm.EMPTY_LIST_MESSAGE)
     else:
-        await message.answer(GetStudentForm.LIST_MESSAGE + format_student_list(students))
+        await message.answer(GetStudentForm.LIST_MESSAGE +
+                             "\n" + format_student_list(students))
 
 
 @students_router.message(GetStudentStates.choose_student, F.text.startswith('/ID_'))
 @auth
 async def get_student_info(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.selected)
-    student = get_student_by_id(int(message.text[4:]))
+    student_id = int(message.text[4:])
+    await state.update_data(student_id=student_id)
+    student = get_student_by_id(student_id)
     await message.answer(format_student_info(student))
+
+
+@students_router.message(Command('spend'), GetStudentStates.selected)
+@auth
+async def spend_student_lesson(message: Message, state: FSMContext) -> None:
+    data = await state.get_data()
+    student_id = data['student_id']
+    student = get_student_by_id(student_id)
+    new_data = {
+        'id': student.id,
+        'given_lessons': student.given_lessons + 1,
+        'lesson_diff': student.lesson_diff - 1,
+    }
+    update_student(**new_data)
+    student = get_student_by_id(student_id)
+    await message.answer(GetStudentForm.STUDENT_UPDATED_MESSAGE +
+                         "\n" + format_student_info(student))

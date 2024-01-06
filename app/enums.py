@@ -29,6 +29,7 @@ class GetStudentForm(str, Enum):
                     "Click on their ID on the left to see more info 😉\n")
     EMPTY_LIST_MESSAGE = ("Seems like you haven't added any students.\n"
                           "Not a big deal! Let's create one with command /create\n")
+    STUDENT_UPDATED_MESSAGE = "Great! Here's the updated student info:\n"
 
 
 class CommandsList(str, Enum):
