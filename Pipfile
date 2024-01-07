@@ -8,6 +8,7 @@ python-dotenv = "*"
 aiosqlite = "*"
 aiogram = "*"
 asyncio = "*"
+alembic = "*"
 
 [dev-packages]
 
