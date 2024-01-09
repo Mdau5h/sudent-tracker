@@ -132,3 +132,26 @@ async def add_student_lesson(message: Message, state: FSMContext) -> None:
         await message.answer(GetStudentForm.STUDENT_UPDATED_MESSAGE +
                              "\n" + format_student_info(student))
         await state.set_state(GetStudentStates.selected)
+
+
+@students_router.message(Command('comment'), GetStudentStates.selected)
+@auth
+async def add_comment_handler(message: Message, state: FSMContext) -> None:
+    await state.set_state(GetStudentStates.add_comment)
+    await message.answer(CreateStudentForm.ENTER_COMMENT_MESSAGE)
+
+
+@students_router.message(GetStudentStates.add_comment)
+@auth
+async def add_comment_accept(message: Message, state: FSMContext) -> None:
+    data = await state.get_data()
+    student_id = data['student_id']
+    new_data = {
+        'id': student_id,
+        'comment': message.text,
+    }
+    update_student(**new_data)
+    student = get_student_by_id(student_id)
+    await message.answer(GetStudentForm.STUDENT_UPDATED_MESSAGE +
+                         "\n" + format_student_info(student))
+    await state.set_state(GetStudentStates.selected)
