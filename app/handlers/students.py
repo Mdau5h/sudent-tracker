@@ -91,7 +91,7 @@ async def get_student_info(message: Message, state: FSMContext) -> None:
 
 @students_router.message(Command('spend'), GetStudentStates.selected)
 @auth
-async def spend_student_lesson(message: Message, state: FSMContext) -> None:
+async def spend_lesson_handler(message: Message, state: FSMContext) -> None:
     data = await state.get_data()
     student_id = data['student_id']
     student = get_student_by_id(student_id)
@@ -108,14 +108,14 @@ async def spend_student_lesson(message: Message, state: FSMContext) -> None:
 
 @students_router.message(Command('add'), GetStudentStates.selected)
 @auth
-async def add_student_lesson(message: Message, state: FSMContext) -> None:
+async def add_lesson_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.add_lessons)
     await message.answer(CreateStudentForm.ENTER_PAID_MESSAGE)
 
 
 @students_router.message(GetStudentStates.add_lessons)
 @auth
-async def add_student_lesson(message: Message, state: FSMContext) -> None:
+async def add_lesson_accept(message: Message, state: FSMContext) -> None:
     if not match("^\\d+$", message.text):
         await message.answer(CreateStudentForm.INCORRECT_INPUT_MESSAGE)
     else:
