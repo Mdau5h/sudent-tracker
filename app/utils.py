@@ -1,4 +1,5 @@
 from database.models import Student
+from app.enums import CommandsList
 
 
 def format_student_list(students: list[Student]):
@@ -14,9 +15,8 @@ def format_student_info(student: Student):
            f"Paid lessons: {student.paid_lessons}\n"
            f"Given lessons: {student.given_lessons}\n"
            f"Lessons left: {student.lesson_diff}\n"
-           f"Status: {'Active' if student.is_active else 'Inactive'}\n"
-           f"\n"
-           f"Spend the lesson: /spend \n"
-           f"Add paid lessons: /add \n"
+           f"Status: {'Active' if student.is_active else 'Inactive'}\n\n"
+           + CommandsList.FOR_STUDENTS +
+           f"\n/all - go back"
            )
     return msg
