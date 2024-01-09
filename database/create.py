@@ -17,7 +17,8 @@ create_students_table = '''
         given_lessons INTEGER,
         lesson_diff INTEGER,
         is_active BOOL,
-        FOREIGN KEY (teacher_id) REFERENCES users(id)
+        comment VARCHAR,
+        FOREIGN KEY (teacher_id) REFERENCES user(id)
     );
 '''
 
