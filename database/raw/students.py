@@ -7,7 +7,8 @@ def create_student_query(
         paid_lessons: int = 0,
         given_lessons: int = 0,
         lesson_diff: int = 0,
-        is_active: bool = True
+        is_active: bool = True,
+        comment: str = ""
 ) -> Query:
     bound_params = {
         'teacher_id': teacher_id,
@@ -15,7 +16,8 @@ def create_student_query(
         'paid_lessons': paid_lessons,
         'given_lessons': given_lessons,
         'lesson_diff': lesson_diff,
-        'is_active': is_active
+        'is_active': is_active,
+        'comment': comment
     }
 
     query = Query(
@@ -26,7 +28,8 @@ def create_student_query(
             paid_lessons, 
             given_lessons, 
             lesson_diff, 
-            is_active
+            is_active,
+            comment
         )
         VALUES(
             :teacher_id, 
@@ -34,7 +37,8 @@ def create_student_query(
             :paid_lessons, 
             :given_lessons, 
             :lesson_diff, 
-            :is_active
+            :is_active,
+            :comment
         );
         ''',
         bound_params,
@@ -81,7 +85,8 @@ def get_student_by_id_query(id_: int) -> Query:
             paid_lessons,
             given_lessons,
             lesson_diff,
-            is_active
+            is_active,
+            comment
         FROM student WHERE id=:id;
         ''',
         bound_params,
@@ -104,7 +109,8 @@ def get_students_by_tg_id_query(teacher_id: int) -> Query:
             paid_lessons,
             given_lessons,
             lesson_diff,
-            is_active
+            is_active,
+            comment
         FROM student WHERE teacher_id=:teacher_id;
         ''',
         bound_params,

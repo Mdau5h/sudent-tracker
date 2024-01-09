@@ -16,3 +16,4 @@ class Student:
     given_lessons: int
     lesson_diff: int
     is_active: bool
+    comment: str
