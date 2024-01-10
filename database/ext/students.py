@@ -4,7 +4,8 @@ from database.raw.students import (
     create_student_query,
     update_student_query,
     get_student_by_id_query,
-    get_students_by_tg_id_query
+    get_students_by_tg_id_query,
+    delete_student_by_id_query
 )
 
 
@@ -35,3 +36,9 @@ def get_students_by_tg_id(teacher_id: int) -> None | list[Student]:
         for student in s.execute(q):
             students.append(Student(*student))
         return students
+
+
+def delete_student_by_id(student_id: int) -> None:
+    q = delete_student_by_id_query(student_id)
+    with session() as s:
+        s.execute(q).fetchone()

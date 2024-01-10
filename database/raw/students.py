@@ -117,3 +117,18 @@ def get_students_by_tg_id_query(teacher_id: int) -> Query:
     )
 
     return query
+
+
+def delete_student_by_id_query(id_: int) -> Query:
+    bound_params = {
+        'id': id_
+    }
+
+    query = Query(
+        '''
+        DELETE FROM student WHERE id=:id;
+        ''',
+        bound_params,
+    )
+
+    return query
