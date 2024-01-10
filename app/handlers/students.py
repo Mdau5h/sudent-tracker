@@ -8,8 +8,7 @@ from app.states import (
     GetStudentStates
 )
 from app.enums import (
-    CreateStudentForm,
-    GetStudentForm
+    StudentForm
 )
 from database.ext.students import (
     save_student,
@@ -31,7 +30,7 @@ students_router = Router()
 @auth
 async def create_student_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(CreateStudentStates.name)
-    await message.answer(CreateStudentForm.ENTER_NAME_MESSAGE)
+    await message.answer(StudentForm.ENTER_NAME_MESSAGE)
 
 
 @students_router.message(CreateStudentStates.name)
@@ -39,25 +38,25 @@ async def create_student_handler(message: Message, state: FSMContext) -> None:
 async def enter_student_name(message: Message, state: FSMContext) -> None:
     await state.update_data(student_name=message.text)
     await state.set_state(CreateStudentStates.paid_lessons)
-    await message.answer(CreateStudentForm.ENTER_PAID_MESSAGE)
+    await message.answer(StudentForm.ENTER_PAID_MESSAGE)
 
 
 @students_router.message(CreateStudentStates.paid_lessons)
 @auth
 async def enter_paid_lessons(message: Message, state: FSMContext) -> None:
     if not match("^\\d+$", message.text):
-        await message.answer(CreateStudentForm.INCORRECT_INPUT_MESSAGE)
+        await message.answer(StudentForm.INCORRECT_INPUT_MESSAGE)
     else:
         await state.update_data(paid_lessons=int(message.text))
         await state.set_state(CreateStudentStates.given_lessons)
-        await message.answer(CreateStudentForm.ENTER_GIVEN_MESSAGE)
+        await message.answer(StudentForm.ENTER_GIVEN_MESSAGE)
 
 
 @students_router.message(CreateStudentStates.given_lessons)
 @auth
 async def enter_given_lessons(message: Message, state: FSMContext) -> None:
     if not match("^\\d+$", message.text):
-        await message.answer(CreateStudentForm.INCORRECT_INPUT_MESSAGE)
+        await message.answer(StudentForm.INCORRECT_INPUT_MESSAGE)
     else:
         await state.update_data(given_lessons=int(message.text))
         data = await state.get_data()
@@ -65,7 +64,7 @@ async def enter_given_lessons(message: Message, state: FSMContext) -> None:
         data['lesson_diff'] = data['paid_lessons'] - data['given_lessons']
         save_student(**data)
         await state.clear()
-        await message.answer(CreateStudentForm.ENTER_COMPLETE_MESSAGE)
+        await message.answer(StudentForm.ENTER_COMPLETE_MESSAGE)
 
 
 @students_router.message(Command('all'))
@@ -74,9 +73,9 @@ async def get_all_students_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.choose_student)
     students = get_students_by_tg_id(message.from_user.id)
     if not students:
-        await message.answer(GetStudentForm.EMPTY_LIST_MESSAGE)
+        await message.answer(StudentForm.EMPTY_LIST_MESSAGE)
     else:
-        await message.answer(GetStudentForm.LIST_MESSAGE +
+        await message.answer(StudentForm.LIST_MESSAGE +
                              "\n" + format_student_list(students))
 
 
@@ -103,7 +102,7 @@ async def spend_lesson_handler(message: Message, state: FSMContext) -> None:
     }
     update_student(**new_data)
     student = get_student_by_id(student_id)
-    await message.answer(GetStudentForm.STUDENT_UPDATED_MESSAGE +
+    await message.answer(StudentForm.STUDENT_UPDATED_MESSAGE +
                          "\n" + format_student_info(student))
 
 
@@ -111,14 +110,14 @@ async def spend_lesson_handler(message: Message, state: FSMContext) -> None:
 @auth
 async def add_lesson_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.add_lessons)
-    await message.answer(CreateStudentForm.ENTER_PAID_MESSAGE)
+    await message.answer(StudentForm.ENTER_PAID_MESSAGE)
 
 
 @students_router.message(GetStudentStates.add_lessons)
 @auth
 async def add_lesson_accept(message: Message, state: FSMContext) -> None:
     if not match("^\\d+$", message.text):
-        await message.answer(CreateStudentForm.INCORRECT_INPUT_MESSAGE)
+        await message.answer(StudentForm.INCORRECT_INPUT_MESSAGE)
     else:
         data = await state.get_data()
         student_id = data['student_id']
@@ -130,7 +129,7 @@ async def add_lesson_accept(message: Message, state: FSMContext) -> None:
         }
         update_student(**new_data)
         student = get_student_by_id(student_id)
-        await message.answer(GetStudentForm.STUDENT_UPDATED_MESSAGE +
+        await message.answer(StudentForm.STUDENT_UPDATED_MESSAGE +
                              "\n" + format_student_info(student))
         await state.set_state(GetStudentStates.selected)
 
@@ -139,7 +138,7 @@ async def add_lesson_accept(message: Message, state: FSMContext) -> None:
 @auth
 async def add_comment_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.add_comment)
-    await message.answer(CreateStudentForm.ENTER_COMMENT_MESSAGE)
+    await message.answer(StudentForm.ENTER_COMMENT_MESSAGE)
 
 
 @students_router.message(GetStudentStates.add_comment)
@@ -153,7 +152,7 @@ async def add_comment_accept(message: Message, state: FSMContext) -> None:
     }
     update_student(**new_data)
     student = get_student_by_id(student_id)
-    await message.answer(GetStudentForm.STUDENT_UPDATED_MESSAGE +
+    await message.answer(StudentForm.STUDENT_UPDATED_MESSAGE +
                          "\n" + format_student_info(student))
     await state.set_state(GetStudentStates.selected)
 
@@ -162,7 +161,7 @@ async def add_comment_accept(message: Message, state: FSMContext) -> None:
 @auth
 async def delete_student_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.del_confirm)
-    await message.answer(CreateStudentForm.CONFIRM_MESSAGE)
+    await message.answer(StudentForm.CONFIRM_MESSAGE)
 
 
 @students_router.message(Command('yes'), GetStudentStates.del_confirm)
@@ -171,7 +170,7 @@ async def delete_student_accept(message: Message, state: FSMContext) -> None:
     data = await state.get_data()
     student_id = data['student_id']
     delete_student_by_id(student_id)
-    await message.answer(GetStudentForm.STUDENT_DELETED_MESSAGE)
+    await message.answer(StudentForm.STUDENT_DELETED_MESSAGE)
     await state.clear()
 
 
@@ -181,6 +180,6 @@ async def delete_student_accept(message: Message, state: FSMContext) -> None:
     data = await state.get_data()
     student_id = data['student_id']
     student = get_student_by_id(student_id)
-    await message.answer(GetStudentForm.DELETE_CANCELED_MESSAGE +
+    await message.answer(StudentForm.DELETE_CANCELED_MESSAGE +
                          "\n" + format_student_info(student))
     await state.set_state(GetStudentStates.selected)
