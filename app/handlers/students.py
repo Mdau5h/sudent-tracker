@@ -15,6 +15,7 @@ from database.ext.students import (
     save_student,
     get_student_by_id,
     get_students_by_tg_id,
+    delete_student_by_id,
     update_student
 )
 from app.utils import (
@@ -153,5 +154,33 @@ async def add_comment_accept(message: Message, state: FSMContext) -> None:
     update_student(**new_data)
     student = get_student_by_id(student_id)
     await message.answer(GetStudentForm.STUDENT_UPDATED_MESSAGE +
+                         "\n" + format_student_info(student))
+    await state.set_state(GetStudentStates.selected)
+
+
+@students_router.message(Command('del'), GetStudentStates.selected)
+@auth
+async def delete_student_handler(message: Message, state: FSMContext) -> None:
+    await state.set_state(GetStudentStates.del_confirm)
+    await message.answer(CreateStudentForm.CONFIRM_MESSAGE)
+
+
+@students_router.message(Command('yes'), GetStudentStates.del_confirm)
+@auth
+async def delete_student_accept(message: Message, state: FSMContext) -> None:
+    data = await state.get_data()
+    student_id = data['student_id']
+    delete_student_by_id(student_id)
+    await message.answer(GetStudentForm.STUDENT_DELETED_MESSAGE)
+    await state.clear()
+
+
+@students_router.message(GetStudentStates.del_confirm)
+@auth
+async def delete_student_accept(message: Message, state: FSMContext) -> None:
+    data = await state.get_data()
+    student_id = data['student_id']
+    student = get_student_by_id(student_id)
+    await message.answer(GetStudentForm.DELETE_CANCELED_MESSAGE +
                          "\n" + format_student_info(student))
     await state.set_state(GetStudentStates.selected)
