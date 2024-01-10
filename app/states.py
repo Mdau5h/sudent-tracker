@@ -17,3 +17,4 @@ class GetStudentStates(StatesGroup):
     selected = State()
     add_lessons = State()
     add_comment = State()
+    del_confirm = State()
