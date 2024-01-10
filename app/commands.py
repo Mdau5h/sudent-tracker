@@ -10,5 +10,6 @@ def for_students() -> list[str]:
     return [
         "/spend - spend lesson",
         "/add - add paid lessons",
-        "/comment - add or change comment"
+        "/comment - add or change comment",
+        "/del - delete student"
     ]
