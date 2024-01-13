@@ -26,7 +26,7 @@ from app.auth import auth
 students_router = Router()
 
 
-@students_router.message(Command('create'))
+@students_router.message(F.text.lower() == '✍️ add new student')
 @auth
 async def create_student_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(CreateStudentStates.name)
@@ -67,7 +67,7 @@ async def enter_given_lessons(message: Message, state: FSMContext) -> None:
         await message.answer(StudentForm.ENTER_COMPLETE_MESSAGE)
 
 
-@students_router.message(Command('all'))
+@students_router.message(F.text.lower() == '📋 see list of your students')
 @auth
 async def get_all_students_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.choose_student)
