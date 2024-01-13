@@ -10,7 +10,7 @@ class StaticMessages(str, Enum):
     HELLO_UNKNOWN_MESSAGE = ("Hi, i'm Student Tracker 🤗\n"
                              "Seems like we don't know each other.\n"
                              "Got access code? Type /code to pass it, so I could remember you!\n")
-    ACCESS_GRANTED_MESSAGE = "Hello, mister admin 😎 Type /help to see all available commands\n"
+    ACCESS_GRANTED_MESSAGE = "Hello, mister admin 😎 Here's what you can do now:\n"
 
 
 class EnterCodeForm(str, Enum):
@@ -24,7 +24,7 @@ class StudentForm(str, Enum):
     ENTER_PAID_MESSAGE = "Enter number of paid lessons:\n"
     ENTER_GIVEN_MESSAGE = "Enter number of given lessons:\n"
     ENTER_COMPLETE_MESSAGE = ("Cool! I've saved the student's info! 👌\n"
-                              "You can see them in the list of /all")
+                              "You can see them in the list")
     INCORRECT_INPUT_MESSAGE = "Sorry, I didn't get you. Throw me the number, please 🙂\n"
     ENTER_COMMENT_MESSAGE = "Enter the comment: \n"
     CONFIRM_MESSAGE = "Are you sure? There's no undo! 🤔\nHit /yes if so"
