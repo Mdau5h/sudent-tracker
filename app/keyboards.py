@@ -13,6 +13,5 @@ init_markup = ReplyKeyboardMarkup(
             KeyboardButton(text='📋 See list of your students')
         ]
     ],
-    resize_keyboard=True,
-    one_time_keyboard=True,
+    resize_keyboard=True
 )

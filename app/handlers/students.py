@@ -1,6 +1,6 @@
 from aiogram import Router, F
 from aiogram.filters import Command
-from aiogram.types import Message
+from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
 from re import match
 from app.states import (
@@ -17,6 +17,7 @@ from database.ext.students import (
     delete_student_by_id,
     update_student
 )
+from app.keyboards import init_markup
 from app.utils import (
     format_student_list,
     format_student_info
@@ -30,7 +31,7 @@ students_router = Router()
 @auth
 async def create_student_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(CreateStudentStates.name)
-    await message.answer(StudentForm.ENTER_NAME_MESSAGE)
+    await message.answer(StudentForm.ENTER_NAME_MESSAGE, reply_markup=ReplyKeyboardRemove())
 
 
 @students_router.message(CreateStudentStates.name)
@@ -64,7 +65,7 @@ async def enter_given_lessons(message: Message, state: FSMContext) -> None:
         data['lesson_diff'] = data['paid_lessons'] - data['given_lessons']
         save_student(**data)
         await state.clear()
-        await message.answer(StudentForm.ENTER_COMPLETE_MESSAGE)
+        await message.answer(StudentForm.ENTER_COMPLETE_MESSAGE, reply_markup=init_markup)
 
 
 @students_router.message(F.text.lower() == '📋 see list of your students')
@@ -76,7 +77,7 @@ async def get_all_students_handler(message: Message, state: FSMContext) -> None:
         await message.answer(StudentForm.EMPTY_LIST_MESSAGE)
     else:
         await message.answer(StudentForm.LIST_MESSAGE +
-                             "\n" + format_student_list(students))
+                             "\n" + format_student_list(students), reply_markup=ReplyKeyboardRemove())
 
 
 @students_router.message(GetStudentStates.choose_student, F.text.startswith('/ID_'))
