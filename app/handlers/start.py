@@ -8,7 +8,7 @@ from database.ext.users import (
 )
 from app.enums import StaticMessages, EnterCodeForm
 from app.states import UserStates
-from app.keyboards import init_markup
+from app.keyboards import start_markup
 from app.config import config
 
 start_router = Router()
@@ -25,7 +25,7 @@ async def start_handler(message: Message, state: FSMContext) -> None:
         msg = StaticMessages.HELLO_MESSAGE
         if user_authorised.is_admin:
             msg += StaticMessages.ACCESS_GRANTED_MESSAGE
-        await message.answer(msg, reply_markup=init_markup)
+        await message.answer(msg, reply_markup=start_markup)
 
 
 @start_router.message(UserStates.new_user, Command('code'))
