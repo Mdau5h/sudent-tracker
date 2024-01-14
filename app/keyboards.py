@@ -42,3 +42,11 @@ student_info_markup = ReplyKeyboardMarkup(
     resize_keyboard=True
 )
 
+confirm_markup = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text=ButtonList.YES_BUTTON),
+            KeyboardButton(text=ButtonList.NO_BUTTON)
+        ]
+    ]
+)

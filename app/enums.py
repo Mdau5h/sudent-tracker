@@ -42,3 +42,5 @@ class ButtonList(str, Enum):
     COMMENT_BUTTON = '✍️ Add or change comment'
     DELETE_STUDENT_BUTTON = '🗑️ Delete student'
     GO_BACK_BUTTON = '🔙 Go back'
+    YES_BUTTON = '✅ Yes'
+    NO_BUTTON = '🚫 No'
