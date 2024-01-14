@@ -17,7 +17,10 @@ from database.ext.students import (
     delete_student_by_id,
     update_student
 )
-from app.keyboards import init_markup
+from app.keyboards import (
+    init_markup,
+    student_info_markup
+)
 from app.utils import (
     format_student_list,
     format_student_info
@@ -27,7 +30,7 @@ from app.auth import auth
 students_router = Router()
 
 
-@students_router.message(F.text.lower() == '✍️ add new student')
+@students_router.message(F.text.in_({'👨‍🎓 Add new student', '/create'}))
 @auth
 async def create_student_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(CreateStudentStates.name)
@@ -68,7 +71,7 @@ async def enter_given_lessons(message: Message, state: FSMContext) -> None:
         await message.answer(StudentForm.ENTER_COMPLETE_MESSAGE, reply_markup=init_markup)
 
 
-@students_router.message(F.text.lower() == '📋 see list of your students')
+@students_router.message(F.text.in_({'📋 See list of your students', '🔙 Go back', '/all'}))
 @auth
 async def get_all_students_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.choose_student)
@@ -87,10 +90,10 @@ async def get_student_info(message: Message, state: FSMContext) -> None:
     student_id = int(message.text[4:])
     await state.update_data(student_id=student_id)
     student = get_student_by_id(student_id)
-    await message.answer(format_student_info(student))
+    await message.answer(format_student_info(student), reply_markup=student_info_markup)
 
 
-@students_router.message(Command('spend'), GetStudentStates.selected)
+@students_router.message(F.text == '✅ Spend lesson', GetStudentStates.selected)
 @auth
 async def spend_lesson_handler(message: Message, state: FSMContext) -> None:
     data = await state.get_data()
@@ -107,11 +110,11 @@ async def spend_lesson_handler(message: Message, state: FSMContext) -> None:
                          "\n" + format_student_info(student))
 
 
-@students_router.message(Command('add'), GetStudentStates.selected)
+@students_router.message(F.text == '➕ Add paid lessons', GetStudentStates.selected)
 @auth
 async def add_lesson_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.add_lessons)
-    await message.answer(StudentForm.ENTER_PAID_MESSAGE)
+    await message.answer(StudentForm.ENTER_PAID_MESSAGE, reply_markup=ReplyKeyboardRemove())
 
 
 @students_router.message(GetStudentStates.add_lessons)
@@ -131,15 +134,15 @@ async def add_lesson_accept(message: Message, state: FSMContext) -> None:
         update_student(**new_data)
         student = get_student_by_id(student_id)
         await message.answer(StudentForm.STUDENT_UPDATED_MESSAGE +
-                             "\n" + format_student_info(student))
+                             "\n" + format_student_info(student), reply_markup=student_info_markup)
         await state.set_state(GetStudentStates.selected)
 
 
-@students_router.message(Command('comment'), GetStudentStates.selected)
+@students_router.message(F.text == '✍️ Add or change comment', GetStudentStates.selected)
 @auth
 async def add_comment_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.add_comment)
-    await message.answer(StudentForm.ENTER_COMMENT_MESSAGE)
+    await message.answer(StudentForm.ENTER_COMMENT_MESSAGE, reply_markup=ReplyKeyboardRemove())
 
 
 @students_router.message(GetStudentStates.add_comment)
@@ -154,11 +157,11 @@ async def add_comment_accept(message: Message, state: FSMContext) -> None:
     update_student(**new_data)
     student = get_student_by_id(student_id)
     await message.answer(StudentForm.STUDENT_UPDATED_MESSAGE +
-                         "\n" + format_student_info(student))
+                         "\n" + format_student_info(student), reply_markup=student_info_markup)
     await state.set_state(GetStudentStates.selected)
 
 
-@students_router.message(Command('del'), GetStudentStates.selected)
+@students_router.message(F.text == '🗑️ Delete student', GetStudentStates.selected)
 @auth
 async def delete_student_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.del_confirm)
