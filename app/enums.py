@@ -1,8 +1,4 @@
 from enum import Enum
-from app.commands import (
-    for_admin_user,
-    for_students
-)
 
 
 class StaticMessages(str, Enum):
@@ -35,11 +31,6 @@ class StudentForm(str, Enum):
     STUDENT_UPDATED_MESSAGE = "Great! Here's the updated student info:\n"
     STUDENT_DELETED_MESSAGE = "Done! 👌\nClick /all to go back\n"
     DELETE_CANCELED_MESSAGE = "Deletion hasn't been confirmed 🤷\n"
-
-
-class CommandsList(str, Enum):
-    FOR_ADMIN_USER = "\n".join(for_admin_user())
-    FOR_STUDENTS = "\n".join(for_students())
 
 
 class ButtonList(str, Enum):

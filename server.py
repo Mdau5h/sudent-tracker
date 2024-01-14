@@ -6,7 +6,6 @@ from aiogram import Bot
 from aiogram.enums import ParseMode
 from aiogram import Dispatcher
 from database.create import rollout as init_db
-from app.handlers.help import help_router
 from app.handlers.start import start_router
 from app.handlers.students import students_router
 from app.config import config
@@ -19,7 +18,6 @@ async def main() -> None:
     dp = Dispatcher()
     dp.include_routers(
         start_router,
-        help_router,
         students_router
     )
     init_db()
