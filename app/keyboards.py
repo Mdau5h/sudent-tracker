@@ -4,13 +4,15 @@ from aiogram.types import (
     InlineKeyboardMarkup,
     InlineKeyboardButton
 )
+from app.enums import ButtonList
 
 
 init_markup = ReplyKeyboardMarkup(
+start_markup = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text='👨‍🎓 Add new student'),
-            KeyboardButton(text='📋 See list of your students')
+            KeyboardButton(text=ButtonList.CREATE_STUDENT_BUTTON),
+            KeyboardButton(text=ButtonList.STUDENT_LIST_BUTTON)
         ]
     ],
     resize_keyboard=True

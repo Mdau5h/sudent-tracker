@@ -18,7 +18,7 @@ from database.ext.students import (
     update_student
 )
 from app.keyboards import (
-    init_markup,
+    start_markup,
     student_info_markup
 )
 from app.utils import (
@@ -68,7 +68,7 @@ async def enter_given_lessons(message: Message, state: FSMContext) -> None:
         data['lesson_diff'] = data['paid_lessons'] - data['given_lessons']
         save_student(**data)
         await state.clear()
-        await message.answer(StudentForm.ENTER_COMPLETE_MESSAGE, reply_markup=init_markup)
+        await message.answer(StudentForm.ENTER_COMPLETE_MESSAGE, reply_markup=start_markup)
 
 
 @students_router.message(F.text.in_({'📋 See list of your students', '🔙 Go back', '/all'}))
