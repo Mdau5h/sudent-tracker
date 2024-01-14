@@ -7,7 +7,14 @@ from aiogram.types import (
 from app.enums import ButtonList
 
 
-init_markup = ReplyKeyboardMarkup(
+enter_code_markup = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text=ButtonList.ENTER_CODE_BUTTON)
+        ]
+    ]
+)
+
 start_markup = ReplyKeyboardMarkup(
     keyboard=[
         [
