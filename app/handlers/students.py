@@ -20,7 +20,8 @@ from database.ext.students import (
 )
 from app.keyboards import (
     start_markup,
-    student_info_markup
+    student_info_markup,
+    confirm_markup
 )
 from app.utils import (
     format_student_list,
@@ -167,16 +168,16 @@ async def add_comment_accept(message: Message, state: FSMContext) -> None:
 @auth
 async def delete_student_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.del_confirm)
-    await message.answer(StudentForm.CONFIRM_MESSAGE)
+    await message.answer(StudentForm.CONFIRM_MESSAGE, reply_markup=confirm_markup)
 
 
-@students_router.message(Command('yes'), GetStudentStates.del_confirm)
+@students_router.message(F.text == ButtonList.YES_BUTTON, GetStudentStates.del_confirm)
 @auth
 async def delete_student_accept(message: Message, state: FSMContext) -> None:
     data = await state.get_data()
     student_id = data['student_id']
     delete_student_by_id(student_id)
-    await message.answer(StudentForm.STUDENT_DELETED_MESSAGE)
+    await message.answer(StudentForm.STUDENT_DELETED_MESSAGE, reply_markup=start_markup)
     await state.clear()
 
 
@@ -187,5 +188,5 @@ async def delete_student_accept(message: Message, state: FSMContext) -> None:
     student_id = data['student_id']
     student = get_student_by_id(student_id)
     await message.answer(StudentForm.DELETE_CANCELED_MESSAGE +
-                         "\n" + format_student_info(student))
+                         "\n" + format_student_info(student), reply_markup=student_info_markup)
     await state.set_state(GetStudentStates.selected)
