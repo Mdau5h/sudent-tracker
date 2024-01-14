@@ -28,16 +28,17 @@ start_markup = ReplyKeyboardMarkup(
 student_info_markup = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text='✅ Spend lesson'),
-            KeyboardButton(text='➕ Add paid lessons')
+            KeyboardButton(text=ButtonList.SPEND_LESSON_BUTTON),
+            KeyboardButton(text=ButtonList.ADD_LESSONS_BUTTON)
         ],
         [
-            KeyboardButton(text='✍️ Add or change comment'),
-            KeyboardButton(text='🗑️ Delete student')
+            KeyboardButton(text=ButtonList.COMMENT_BUTTON),
+            KeyboardButton(text=ButtonList.DELETE_STUDENT_BUTTON)
         ],
         [
-            KeyboardButton(text='🔙 Go back')
+            KeyboardButton(text=ButtonList.GO_BACK_BUTTON)
         ]
     ],
     resize_keyboard=True
 )
+
