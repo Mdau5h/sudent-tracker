@@ -40,3 +40,14 @@ class StudentForm(str, Enum):
 class CommandsList(str, Enum):
     FOR_ADMIN_USER = "\n".join(for_admin_user())
     FOR_STUDENTS = "\n".join(for_students())
+
+
+class ButtonList(str, Enum):
+    ENTER_CODE_BUTTON = '🔑 Enter code'
+    CREATE_STUDENT_BUTTON = '👨‍🎓 Add new student'
+    STUDENT_LIST_BUTTON = '📋 See list of your students'
+    SPEND_LESSON_BUTTON = '✅ Spend lesson'
+    ADD_LESSONS_BUTTON = '➕ Add paid lessons'
+    COMMENT_BUTTON = '✍️ Add or change comment'
+    DELETE_STUDENT_BUTTON = '🗑️ Delete student'
+    GO_BACK_BUTTON = '🔙 Go back'
