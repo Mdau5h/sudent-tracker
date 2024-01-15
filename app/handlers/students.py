@@ -1,5 +1,9 @@
 from aiogram import Router, F
-from aiogram.types import Message, ReplyKeyboardRemove
+from aiogram.types import (
+    Message,
+    CallbackQuery,
+    ReplyKeyboardRemove,
+)
 from aiogram.fsm.context import FSMContext
 from re import match
 from app.states import (
@@ -83,14 +87,14 @@ async def get_all_students_handler(message: Message, state: FSMContext) -> None:
         await message.answer(StudentForm.ADDITIONAL_MESSAGE, reply_markup=start_markup)
 
 
-@students_router.message(GetStudentStates.choose_student, F.text.startswith('/ID_'))
+@students_router.callback_query(GetStudentStates.choose_student)
 @auth
-async def get_student_info(message: Message, state: FSMContext) -> None:
+async def get_student_info(call: CallbackQuery, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.selected)
-    student_id = int(message.text[4:])
+    student_id = int(call.data)
     await state.update_data(student_id=student_id)
     student = get_student_by_id(student_id)
-    await message.answer(format_student_info(student), reply_markup=student_info_markup)
+    await call.message.answer(format_student_info(student), reply_markup=student_info_markup)
 
 
 @students_router.message(F.text == ButtonList.SPEND_LESSON_BUTTON, GetStudentStates.selected)
