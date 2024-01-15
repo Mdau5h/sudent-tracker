@@ -32,11 +32,11 @@ class StudentForm(str, Enum):
     ENTER_NAME_MESSAGE = "Enter student's name:\n"
     ENTER_PAID_MESSAGE = "Enter number of paid lessons:\n"
     ENTER_GIVEN_MESSAGE = "Enter number of given lessons:\n"
+    ENTER_COMMENT_MESSAGE = "Enter the comment: \n"
     ENTER_COMPLETE_MESSAGE = ("Cool! I've saved the student's info! 👌\n"
                               "You can see them in the list by hitting:\n"
                               f'"{ButtonList.STUDENT_LIST_BUTTON.value}"\n')
     INCORRECT_INPUT_MESSAGE = "Sorry, I didn't get you. Throw me the number, please 🙂\n"
-    ENTER_COMMENT_MESSAGE = "Enter the comment: \n"
     CONFIRM_MESSAGE = "Are you sure? There's no undo! 🤔\n"
     LIST_MESSAGE = ("Here's the list of all your students 👇\n"
                     "Click on them to see more info 😉\n")
@@ -46,6 +46,7 @@ class StudentForm(str, Enum):
                           "Not a big deal! Let's create one!\n"
                           f'Hit the button: "{ButtonList.CREATE_STUDENT_BUTTON.value}" \n'
                           )
+    WARNING_ONE_LESSON_MESSAGE = "Warning! ⚠️\nThere is only one paid lesson left!"
     STUDENT_UPDATED_MESSAGE = "Great! 🤗 Here's the updated student info:\n"
     STUDENT_DELETED_MESSAGE = "Done! Student has been deleted! 👌\n"
     DELETE_CANCELED_MESSAGE = "Deletion hasn't been confirmed 🤷\n"

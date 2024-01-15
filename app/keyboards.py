@@ -13,7 +13,8 @@ enter_code_markup = ReplyKeyboardMarkup(
         [
             KeyboardButton(text=ButtonList.ENTER_CODE_BUTTON)
         ]
-    ]
+    ],
+    resize_keyboard=True
 )
 
 start_markup = ReplyKeyboardMarkup(
