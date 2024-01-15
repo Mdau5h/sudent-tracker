@@ -1,11 +1,12 @@
 from aiogram.types import (
     ReplyKeyboardMarkup,
     KeyboardButton,
-    InlineKeyboardMarkup,
-    InlineKeyboardButton
+    InlineKeyboardMarkup
 )
-from app.enums import ButtonList
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+from app.enums import ButtonList
+from database.models import Student
 
 enter_code_markup = ReplyKeyboardMarkup(
     keyboard=[
@@ -50,3 +51,10 @@ confirm_markup = ReplyKeyboardMarkup(
         ]
     ]
 )
+
+
+def get_students_list_markup(students: list[Student]) -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    [builder.button(text=f'🧑‍🎓{student.student_name}', callback_data=str(student.id)) for student in students]
+    builder.adjust(1, repeat=True)
+    return builder.as_markup()
