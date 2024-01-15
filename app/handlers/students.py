@@ -20,7 +20,8 @@ from database.ext.students import (
 from app.keyboards import (
     start_markup,
     student_info_markup,
-    confirm_markup
+    confirm_markup,
+    get_students_list_markup
 )
 from app.utils import (
     format_student_list,
@@ -81,8 +82,8 @@ async def get_all_students_handler(message: Message, state: FSMContext) -> None:
     if not students:
         await message.answer(StudentForm.EMPTY_LIST_MESSAGE)
     else:
-        await message.answer(StudentForm.LIST_MESSAGE +
-                             "\n" + format_student_list(students), reply_markup=start_markup)
+        await message.answer(StudentForm.LIST_MESSAGE, reply_markup=get_students_list_markup(students))
+        await message.answer(StudentForm.ADDITIONAL_MESSAGE, reply_markup=start_markup)
 
 
 @students_router.message(GetStudentStates.choose_student, F.text.startswith('/ID_'))
