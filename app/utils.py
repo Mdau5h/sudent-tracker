@@ -1,14 +1,6 @@
 from database.models import Student
 
 
-def format_student_list(students: list[Student]):
-    msg = '\n'.join((
-        f"/ID_{student.id}: {student.student_name}"
-        for student in students
-    ))
-    return msg
-
-
 def format_student_info(student: Student):
     msg = (f"Name: {student.student_name}\n"
            f"Paid lessons: {student.paid_lessons}\n"
@@ -16,5 +8,6 @@ def format_student_info(student: Student):
            f"Lessons left: {student.lesson_diff}\n"
            f"Status: {'Active' if student.is_active else 'Inactive'}\n"
            f"{'Comment: ' + chr(34) + student.comment + chr(34) + chr(10) if student.comment else ''}"
+           f"{chr(10) + 'Warning! ⚠️' + chr(10) + 'There is only one paid lesson left!' if student.lesson_diff == 1 else ''}"
            )
     return msg

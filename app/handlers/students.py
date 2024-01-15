@@ -23,10 +23,7 @@ from app.keyboards import (
     confirm_markup,
     get_students_list_markup
 )
-from app.utils import (
-    format_student_list,
-    format_student_info
-)
+from app.utils import format_student_info
 from app.auth import auth
 
 students_router = Router()
