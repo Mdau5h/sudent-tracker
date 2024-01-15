@@ -1,6 +1,19 @@
 from enum import Enum
 
 
+class ButtonList(str, Enum):
+    ENTER_CODE_BUTTON = '🔑 Enter code'
+    CREATE_STUDENT_BUTTON = '👨‍🎓 Add new student'
+    STUDENT_LIST_BUTTON = '📋 See list of your students'
+    SPEND_LESSON_BUTTON = '✅ Spend lesson'
+    ADD_LESSONS_BUTTON = '➕ Add paid lessons'
+    COMMENT_BUTTON = '✍️ Add or change comment'
+    DELETE_STUDENT_BUTTON = '🗑️ Delete student'
+    GO_BACK_BUTTON = '🔙 Go back'
+    YES_BUTTON = '✅ Yes'
+    NO_BUTTON = '🚫 No'
+
+
 class StaticMessages(str, Enum):
     HELLO_MESSAGE = "Here you are again!\n"
     HELLO_UNKNOWN_MESSAGE = ("Hi, i'm Student Tracker 🤗\n"
