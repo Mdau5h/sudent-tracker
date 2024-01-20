@@ -2,7 +2,6 @@ from aiogram import Router, F
 from aiogram.types import (
     Message,
     CallbackQuery,
-    ReplyKeyboardRemove,
 )
 from aiogram.fsm.context import FSMContext
 from re import match
@@ -25,7 +24,8 @@ from app.keyboards import (
     start_markup,
     student_info_markup,
     confirm_markup,
-    get_students_list_markup
+    get_students_list_markup,
+    cancel_markup
 )
 from app.utils import format_student_info
 from app.auth import auth
@@ -38,7 +38,7 @@ students_router = Router()
 async def create_student_handler(message: Message, state: FSMContext) -> None:
     await state.clear()
     await state.set_state(CreateStudentStates.name)
-    await message.answer(StudentForm.ENTER_NAME_MESSAGE, reply_markup=ReplyKeyboardRemove())
+    await message.answer(StudentForm.ENTER_NAME_MESSAGE, reply_markup=cancel_markup)
 
 
 @students_router.message(CreateStudentStates.name)
@@ -46,7 +46,7 @@ async def create_student_handler(message: Message, state: FSMContext) -> None:
 async def enter_student_name(message: Message, state: FSMContext) -> None:
     await state.update_data(student_name=message.text)
     await state.set_state(CreateStudentStates.paid_lessons)
-    await message.answer(StudentForm.ENTER_PAID_MESSAGE)
+    await message.answer(StudentForm.ENTER_PAID_MESSAGE, reply_markup=cancel_markup)
 
 
 @students_router.message(CreateStudentStates.paid_lessons)
@@ -118,7 +118,7 @@ async def spend_lesson_handler(message: Message, state: FSMContext) -> None:
 @auth
 async def add_lesson_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.add_lessons)
-    await message.answer(StudentForm.ENTER_PAID_MESSAGE, reply_markup=ReplyKeyboardRemove())
+    await message.answer(StudentForm.ENTER_PAID_MESSAGE, reply_markup=cancel_markup)
 
 
 @students_router.message(GetStudentStates.add_lessons)
@@ -146,7 +146,7 @@ async def add_lesson_accept(message: Message, state: FSMContext) -> None:
 @auth
 async def add_comment_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(GetStudentStates.add_comment)
-    await message.answer(StudentForm.ENTER_COMMENT_MESSAGE, reply_markup=ReplyKeyboardRemove())
+    await message.answer(StudentForm.ENTER_COMMENT_MESSAGE, reply_markup=cancel_markup)
 
 
 @students_router.message(GetStudentStates.add_comment)
@@ -191,3 +191,6 @@ async def delete_student_accept(message: Message, state: FSMContext) -> None:
     await message.answer(StudentForm.DELETE_CANCELED_MESSAGE +
                          "\n" + format_student_info(student), reply_markup=student_info_markup)
     await state.set_state(GetStudentStates.selected)
+
+
+
