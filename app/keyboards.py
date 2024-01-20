@@ -53,6 +53,14 @@ confirm_markup = ReplyKeyboardMarkup(
     ]
 )
 
+cancel_markup = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text=ButtonList.CANCEL_BUTTON)
+        ]
+    ]
+)
+
 
 def get_students_list_markup(students: list[Student]) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
