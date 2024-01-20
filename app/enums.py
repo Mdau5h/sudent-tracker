@@ -12,6 +12,7 @@ class ButtonList(str, Enum):
     GO_BACK_BUTTON = '🔙 Go back'
     YES_BUTTON = '✅ Yes'
     NO_BUTTON = '🚫 No'
+    CANCEL_BUTTON = '🚫 Cancel'
 
 
 class StaticMessages(str, Enum):
@@ -20,6 +21,7 @@ class StaticMessages(str, Enum):
                              "Seems like we don't know each other.\n"
                              "Got access code? Hit the button below to pass it, so I could remember you!\n")
     ACCESS_GRANTED_MESSAGE = "Hello, mister admin 😎 Here's what you can do now:\n"
+    CANCELED_MESSAGE = "Operation canceled 👀"
 
 
 class EnterCodeForm(str, Enum):
@@ -42,7 +44,7 @@ class StudentForm(str, Enum):
                     "Click on them to see more info 😉\n")
     ADDITIONAL_MESSAGE = ("Or you can add a new one! \n"
                           f'Hit the button: "{ButtonList.CREATE_STUDENT_BUTTON.value}" to do so!\n')
-    EMPTY_LIST_MESSAGE = ("Seems like you don't any students yet. 🤔\n"
+    EMPTY_LIST_MESSAGE = ("Seems like you don't have any students yet. 🤔\n"
                           "Not a big deal! Let's create one!\n"
                           f'Hit the button: "{ButtonList.CREATE_STUDENT_BUTTON.value}" \n'
                           )
