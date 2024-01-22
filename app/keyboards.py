@@ -50,7 +50,8 @@ confirm_markup = ReplyKeyboardMarkup(
             KeyboardButton(text=ButtonList.YES_BUTTON),
             KeyboardButton(text=ButtonList.NO_BUTTON)
         ]
-    ]
+    ],
+    resize_keyboard=True
 )
 
 cancel_markup = ReplyKeyboardMarkup(
@@ -58,7 +59,8 @@ cancel_markup = ReplyKeyboardMarkup(
         [
             KeyboardButton(text=ButtonList.CANCEL_BUTTON)
         ]
-    ]
+    ],
+    resize_keyboard=True
 )
 
 
