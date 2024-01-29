@@ -10,7 +10,7 @@ jobs:
       - name: Stop service
         run: systemctl stop student_tracker_bot.service
       - name: Pull master
-        run: git pull
+        run: git fetch
       - name: Resolve dependencies
         run: pipenv install
       - name: Start service
