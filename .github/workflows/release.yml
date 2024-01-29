@@ -4,9 +4,7 @@ jobs:
   reload-service:
     runs-on: self-hosted
     steps:
-      - name: Print where am I
-        run: pwd
       - name: TP to working directory
         run: cd /home/projects/sudent-tracker && pwd
-#      - name: Print where am I
-#        run: pwd
+      - name: Print where am I
+        run: pwd
