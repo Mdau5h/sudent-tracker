@@ -10,12 +10,12 @@ jobs:
       - name: Stop service
         run: systemctl stop student_tracker_bot.service
       - name: Pull master
-        env:
+#        env:
 #          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
 #          GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
-          GITHUB_TOKEN: ${{ github.token }}
-#        run: git fetch https://$GITHUB_TOKEN@github.com/Mdau5h/sudent-tracker.git
-        run: echo $GITHUB_TOKEN
+#          GITHUB_TOKEN: ${{ github.token }}
+        run: git fetch https://${{ github.token }}@github.com/Mdau5h/sudent-tracker.git
+#        run: echo $GITHUB_TOKEN
       - name: Resolve dependencies
         run: pipenv install
       - name: Start service
