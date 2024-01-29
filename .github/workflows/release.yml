@@ -11,9 +11,9 @@ jobs:
         run: systemctl stop student_tracker_bot.service
       - name: Pull master
         env:
-          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-          GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+#          GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+          GITHUB_TOKEN: ${{ github.token }}
 #        run: git fetch https://$GITHUB_TOKEN@github.com/Mdau5h/sudent-tracker.git
         run: echo $GITHUB_TOKEN
       - name: Resolve dependencies
