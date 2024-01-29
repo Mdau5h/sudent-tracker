@@ -7,7 +7,11 @@ jobs:
       run:
         working-directory: /home/projects/sudent-tracker
     steps:
-#      - name: TP to working directory
-#        run: cd /home/projects/sudent-tracker && pwd
-      - name: Print where am I
-        run: pwd
+      - name: Stop service
+        run: systemctl stop student_tracker_bot.service
+      - name: Pull master
+        run: git pull
+      - name: Resolve dependencies
+        run: pipenv install
+      - name: Start service
+        run: systemctl start student_tracker_bot.service
