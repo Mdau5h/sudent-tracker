@@ -20,7 +20,7 @@ class StaticMessages(str, Enum):
     HELLO_UNKNOWN_MESSAGE = ("Hi, i'm Student Tracker 🤗\n"
                              "Seems like we don't know each other.\n"
                              "Got access code? Hit the button below to pass it, so I could remember you!\n")
-    ACCESS_GRANTED_MESSAGE = "Hello, mister admin 😎 Here's what you can do now:\n"
+    ACCESS_GRANTED_MESSAGE = "Hello, mister admin! Glad to see you again! 😎\n Here's what you can do now:\n"
     CANCELED_MESSAGE = "Operation canceled 👀"
 
 
