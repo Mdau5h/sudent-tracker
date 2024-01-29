@@ -1,0 +1,8 @@
+name: Release
+on: workflow_dispatch
+jobs:
+  reload-service:
+    runs-on: self-hosted
+    steps:
+      - name: Print where am I
+        run: pwd
