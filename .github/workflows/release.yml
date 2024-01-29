@@ -3,8 +3,11 @@ on: workflow_dispatch
 jobs:
   reload-service:
     runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: ./home/projects/sudent-tracker
     steps:
-      - name: TP to working directory
-        run: cd /home/projects/sudent-tracker && pwd
+#      - name: TP to working directory
+#        run: cd /home/projects/sudent-tracker && pwd
       - name: Print where am I
         run: pwd
