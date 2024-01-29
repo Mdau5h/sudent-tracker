@@ -14,7 +14,7 @@ jobs:
 #          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
 #          GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
 #          GITHUB_TOKEN: ${{ github.token }}
-        run: git fetch https://${{ github.token }}@github.com/Mdau5h/sudent-tracker.git
+        run: git fetch https://${{ secrets.GH_PAT }}@github.com/Mdau5h/sudent-tracker.git :origin/main
 #        run: echo $GITHUB_TOKEN
       - name: Resolve dependencies
         run: pipenv install
